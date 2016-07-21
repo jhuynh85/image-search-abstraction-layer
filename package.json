@@ -1,0 +1,24 @@
+{
+  "name": "image-search",
+  "version": "1.0.0",
+  "description": "FCC api project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhuynh85/image-search-abstraction-layer.git"
+  },
+  "author": "Joseph Huynh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhuynh85/image-search-abstraction-layer/issues"
+  },
+  "homepage": "https://github.com/jhuynh85/image-search-abstraction-layer#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongodb": "^2.2.4"
+  }
+}
