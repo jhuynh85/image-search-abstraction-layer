@@ -31,7 +31,7 @@ app.get('/latest', function(req,res){
     });
 });
 
-// Process search query
+// Route to process the search query, save it to a list, and return the search results
 app.get('/:searchStr', function(req, res){
     console.log('SearchStr:'+req.params.searchStr);
     console.log('Query:'+req.query.offset);
@@ -40,7 +40,7 @@ app.get('/:searchStr', function(req, res){
     var searchString = req.params.searchStr;
     var offset = (req.query.offset == null)?0:req.query.offset;
     
-    // Store search query
+    // Store search query in list
     mongo.connect(mongoURL, function(err, db){
         if (err) throw err;
         var queryCollection = db.collection('queries');
@@ -52,23 +52,21 @@ app.get('/:searchStr', function(req, res){
             'when': moment().format()
         };
         
-        // Find queryList if one exists and add new query
+        // Get queryList if one exists and add the new query
         queryCollection.find({}).toArray(function(err, doc){
             if (err) throw err;
             if (doc[0] != null) {
-                //console.log(doc[0]);
                 console.log('Adding to queryList');
                 queryList = doc[0].queries;
                 if (queryList.length == 10) queryList.pop(); // Remove oldest query once list has 10 queries
                 queryList.unshift(query);
             } else {
-                // Insert new doc
+                // Create new list
                 console.log('Creating new queryList');
                 queryList.unshift(query);
             }
-            //console.log(queryList);
                 
-            // Upsert updated queryList
+            // Upsert updated queryList to the database
             queryCollection.findOneAndUpdate(
                 { },
                 { $set: {queries: queryList}},
@@ -89,16 +87,15 @@ app.get('/:searchStr', function(req, res){
         });
     });
     
-    
+    // Perform search on Bing api
     Bing.composite(searchString, {
             top: 10,  // Number of results (max 15 for news, max 50 if other) 
-            skip: offset,  // Skip first < results 
+            skip: offset,  // Skip first <offset> results 
             sources: "image", //Choices are web+image+video+news+spell 
             newsSortBy: "Relevance" //Choices are Date, Relevance 
         }, 
         function(error, resp, body){
             if (error) throw error;
-            //console.log(body.d.results[0].Image);
             results = body.d.results[0].Image;
             var json = [];
             
@@ -112,14 +109,12 @@ app.get('/:searchStr', function(req, res){
                 });
             }
             res.send(json);
-        });
+    });
 });
-
 
 // Serve default page
 app.get('/', function(req, res){
     res.sendFile('index.html', {root: __dirname});
 });
-
 
 app.listen(port);
