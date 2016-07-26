@@ -19,6 +19,8 @@
   "homepage": "https://github.com/jhuynh85/image-search-abstraction-layer#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "mongodb": "^2.2.4"
+    "moment": "^2.14.1",
+    "mongodb": "^2.2.4",
+    "node-bing-api": "^2.4.1"
   }
 }
