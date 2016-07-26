@@ -1,21 +1,14 @@
-# FreeCodeCamp Basejump - URL Shortener Microservice
+# FreeCodeCamp Basejump - Image Search Abstraction Layer
 
 JavaScript app that fulfills the following user stories:
  
-1. I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.
-2. If I pass an invalid URL that doesn't follow the valid `http://www.example.com` format, the JSON response will contain an error instead.
-3. When I visit that shortened URL, it will redirect me to my original link.
+1. I can get the image URLs, alt text and page urls for a set of images relating to a given search string.
+2. I can paginate through the responses by adding a ?offset=2 parameter to the URL.
+3. I can get a list of the most recently submitted search strings.
 
-**Example creation usage:**  
-`https://fcc-basejump-urlshortener.herokuapp.com/new/http://foo.com:80`  
-`https://fcc-basejump-urlshortener.herokuapp.com/new/https://www`  
+**Example usage:**  
+Search for 'lolcats funny' and skip the first 10 results:  
+`https://fcc-basejump-imagesearch.herokuapp.com/lolcats%20funny?offset=10`
 
-**Example creation output:**  
-`{ "original_url":"http://foo.com:80", "short_url":"https://fcc-basejump-urlshortener.herokuapp.com//LhNGY" }`  
-`{ "error":"URL invalid" }`
-
-**Usage:**  
-`https://fcc-basejump-urlshortener.herokuapp.com/Z1USYUD`
-
-**Output:**  
-`https://www.google.com/`
+Display the most recent searches:  
+`https://fcc-basejump-imagesearch.herokuapp.com/latest`
