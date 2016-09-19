@@ -1,4 +1,4 @@
-# FreeCodeCamp Basejump - Image Search Abstraction Layer
+# Image Search Abstraction Layer
 
 JavaScript app that fulfills the following user stories:
  
